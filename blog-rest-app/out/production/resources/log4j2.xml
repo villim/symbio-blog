@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <properties>
+        <property name="logPath">/opt/symbio/logs/blog/blog-rest-app/</property>
+        <property name="logNamePrefix">blog-rest-app</property>
+        <property name="logName">${logPath}${logNamePrefix}</property>
+    </properties>
+
+    <Appenders>
+        <!--<Console name="Console" target="SYSTEM_OUT"> -->
+        <!--<PatternLayout pattern="%d [%t] %-5p %c - %m%n" /> -->
+        <!--</Console> -->
+
+        <RollingFile name="RollingFile" fileName="${logName}.log" filePattern="${logName}.%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5p %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="256 MB" />
+            </Policies>
+            <DefaultRolloverStrategy compressionLevel="5" />
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <!--<AppenderRef ref="Console" /> -->
+            <AppenderRef ref="RollingFile" />
+        </Root>
+        <logger name="org.eclipse.jetty" level="info" />
+        <logger name="org.hibernate" level="info"/>
+        <Logger name="org.springframework" level="info"/>
+        <Logger name="org.springframework.boot" level="info"/>
+        <logger name="org.springframework.security" level="info" />
+        <logger name="com.symbio.blog" level="debug" />
+    </Loggers>
+</Configuration>

@@ -1,0 +1,18 @@
+ 
+ dependencies {
+   	compile project(":blog-domain")
+   	
+	//compile("org.springframework:spring-core:${springVersion}")
+	//compile("org.springframework:spring-context:${springVersion}")
+	//compile("org.springframework:spring-jms:${springVersion}")
+	compile("org.springframework.security:spring-security-web:${springVersion}")
+	compile("org.springframework.session:spring-session:${springSessionVersion}")
+	compile("org.springframework.data:spring-data-jpa:${springDataVersion}")
+	
+	compile("org.apache.commons:commons-dbcp2:${commonDBCP2Version}")
+	compile("org.hibernate:hibernate-entitymanager:${hibernateCoreVersion}")
+	compile("javax.jms:javax.jms-api:2.0.1")
+	compile("org.glassfish.mq:imq:5.1")
+    compile ("org.apache.commons:commons-compress:1.18")
+}
+

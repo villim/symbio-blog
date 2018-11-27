@@ -1,0 +1,6 @@
+dependencies {
+  	compile("org.hibernate:hibernate-core:${hibernateCoreVersion}")
+    compile("org.springframework:spring-core:${springVersion}")
+    compile("org.springframework:spring-context:${springVersion}")
+    compile("com.google.code.gson:gson:${gsonVersion}")
+}

@@ -1,0 +1,47 @@
+
+apply plugin: 'nebula.ospackage'
+
+version="${project.version}-${gitAbbRevision}"
+
+ospackage {
+
+	packageName = "${project.name}"
+    version = "${project.version}"
+    release = '1'
+    arch = I386
+    os = LINUX
+    user='deploy'
+    permissionGroup='deploy'
+
+    postInstall file('src/main/rpm-scripts/postinstall.sh')
+
+    into '/opt/symbio/apps/blog/'
+
+}
+
+buildRpm {
+
+    from('src/main/resources') {
+        fileType CONFIG | NOREPLACE
+        createDirectoryEntry = false
+        addParentDirs = false
+        into '/opt/symbio/config/blog/'
+    }
+    
+    from("src/main/spring-shell") {
+    	fileMode = 0755
+        createDirectoryEntry = false
+        addParentDirs = false
+        into "/opt/symbio/apps/blog/"
+ 	}
+ 	
+	doLast {
+ 		def rpmVersion = version.replaceAll('-','~')
+        // print rpm version while building for review
+        println "=============blog-init================="
+		println "**RPM-VERSION:${rpmVersion}-${ospackage.release}**"
+		println "======================================="
+	}
+ 	
+}
+

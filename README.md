@@ -18,3 +18,6 @@ Blog Management System
 * Cache Posts
 * Swagger
  
+
+mkdir -p /opt/symbio/{app,config,logs,h2db}/blog
+
