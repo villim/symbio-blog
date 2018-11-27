@@ -1,6 +1,5 @@
 package com.symbio.blog.rest.controller;
 
-import com.google.gson.Gson;
 import com.symbio.blog.domain.Version;
 import com.symbio.blog.domain.post.Post;
 import com.symbio.blog.domain.user.User;
@@ -24,13 +23,10 @@ import java.util.List;
 @RestController
 public class BlogRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BlogRestController.class);
 
     @Autowired
     private Environment env;
 
-    @Autowired
-    private Gson gson;
 
     @Autowired
     private UserService userService;
@@ -79,7 +75,7 @@ public class BlogRestController {
     }
 
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "')")
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/users/{id}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/v1/users/{id}", produces = "application/json")
     public void deleteUserById(@PathVariable(value = "id") Long userId) {
         this.userService.delete(userId);
     }
@@ -94,7 +90,7 @@ public class BlogRestController {
 
 
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_POST + "')")
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/posts/{id}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/v1/posts/{id}", produces = "application/json")
     public void deletePostById(@PathVariable(value = "id") Long postId) {
         this.postService.delete(postId);
     }
@@ -112,6 +108,12 @@ public class BlogRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/v1/posts/{id}", produces = "application/json")
     public Post getPost(@PathVariable(value = "id") Long postId) {
         return this.postService.getById(postId).get();
+    }
+
+    @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "','" + UserRoleConstant.ROLE_USER + "')")
+    @RequestMapping(method = RequestMethod.GET, value = "/v1/users/{id}/posts", produces = "application/json")
+    public List<Post> getPostsOfUser(@PathVariable(value = "id") Long userId) {
+        return this.postService.search(userId);
     }
 
     /**

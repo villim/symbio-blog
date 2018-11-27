@@ -24,8 +24,8 @@ public class RequestValidator {
 
     public static boolean validatePostRequest(PostRequest request) {
 
-        if (StringUtils.isBlank(request.getTitle()) || StringUtils.isBlank(request.getBody())) {
-            throw new BlogValidationException("Title and Body cant be empty.");
+        if (StringUtils.isBlank(request.getTitle()) || StringUtils.isBlank(request.getBody()) || request.getUserId() == 0) {
+            throw new BlogValidationException("UserId, Title and Body cant be empty.");
         }
 
         return true;

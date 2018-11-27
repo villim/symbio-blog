@@ -11,6 +11,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     Post findByTitle(String title);
 
+    List<Post> findByUserId(long userId);
 
     // TODO: should use native SQL
     List<Post> findByTitleOrBody(String title, String body);

@@ -18,6 +18,10 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLOG-POST-ID-GENERATOR")
     private Long id;
 
+
+    @Column(name = "USER_ID")
+    private Long userId;
+
     @Column(name = "TITLE")
     private String title;
 
@@ -58,6 +62,14 @@ public class Post implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getModifiedDate() {

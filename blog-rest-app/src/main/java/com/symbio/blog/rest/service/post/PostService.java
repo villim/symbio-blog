@@ -18,4 +18,6 @@ public interface PostService {
 
     List<Post> search(String title, String body);
 
+    List<Post> search(long userId);
+
 }

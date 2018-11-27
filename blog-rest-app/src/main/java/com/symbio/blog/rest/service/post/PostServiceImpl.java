@@ -53,6 +53,11 @@ public class PostServiceImpl implements PostService {
         return this.postRepository.findByTitleOrBody(title, body);
     }
 
+    @Override
+    public List<Post> search(long userId) {
+        return this.postRepository.findByUserId(userId);
+    }
+
     private Post checkExistedPost(String title) {
         Post existedPost = this.postRepository.findByTitle(title);
         if (existedPost != null && existedPost.getId() != 0) {
@@ -67,6 +72,7 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postRequest.getTitle());
         post.setBody(postRequest.getBody());
         post.setModifiedDate(new Date());
+        post.setUserId(postRequest.getUserId());
         return post;
     }
 

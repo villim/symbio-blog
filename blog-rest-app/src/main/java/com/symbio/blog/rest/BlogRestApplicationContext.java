@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@Import({PersistenceJPAContext.class, HazelcastHttpSessionConfig.class})
 @Import({PersistenceJPAContext.class})
 @EnableJpaRepositories(basePackages = {"com.symbio.blog.infrastructure.springdata"})
-@ComponentScan(basePackages = {"com.symbio.blog.domain", "com.symbio.blog.service", "com.symbio.blog.infrastructure", "com.symbio.blog.rest"})
+@ComponentScan(basePackages = {"com.symbio.blog.domain", "com.symbio.blog.infrastructure", "com.symbio.blog.rest"})
 @PropertySource({"file:/opt/symbio/config/blog/blog-public.properties", "classpath:version.properties"})
 public class BlogRestApplicationContext {
 

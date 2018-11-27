@@ -2,6 +2,8 @@ package com.symbio.blog.rest.schema;
 
 public class PostRequest {
 
+    private long userId;
+
     private String title;
 
     private String body;
@@ -20,5 +22,13 @@ public class PostRequest {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
