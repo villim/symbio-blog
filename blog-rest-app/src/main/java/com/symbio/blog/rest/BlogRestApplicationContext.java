@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration("blog-rest-context")
 //@Import({PersistenceJPAContext.class, HazelcastHttpSessionConfig.class})
-@Import({PersistenceJPAContext.class})
+@Import({PersistenceJPAContext.class, SwaggerConfig.class})
 @EnableJpaRepositories(basePackages = {"com.symbio.blog.infrastructure.springdata"})
 @ComponentScan(basePackages = {"com.symbio.blog.domain", "com.symbio.blog.infrastructure", "com.symbio.blog.rest"})
 @PropertySource({"file:/opt/symbio/config/blog/blog-public.properties", "classpath:version.properties"})

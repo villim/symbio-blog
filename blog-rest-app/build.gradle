@@ -41,6 +41,9 @@ dependencies {
     compile('org.aspectj:aspectjrt:1.9.1')
     compile("com.h2database:h2:1.4.194")
 
+    compile("io.springfox:springfox-swagger2:2.0.2")
+    compile("io.springfox:springfox-swagger-ui:2.0.2")
+
 }
 
 configurations { all*.exclude module: 'spring-boot-starter-logging' }

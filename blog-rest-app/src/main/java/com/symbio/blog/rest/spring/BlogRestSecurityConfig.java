@@ -35,7 +35,6 @@ public class BlogRestSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().access("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "','" + UserRoleConstant.ROLE_USER + "')")
                 .and().exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint);
-
     }
 
 }

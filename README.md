@@ -5,8 +5,15 @@ Blog Management System
 ## Features
 
 * Anoymous User can view and search for posts
-* Anoymous can reiste with email address
-* Registed User can make comments
+* Anoymous can register with email address
+* Registed User can publish posts and make comments
+
+## API Documents
+
+Please check with Swagger:
+http://localhost:8080/symbio-blog/swagger-ui.html#/
+
+![Swagger](https://github.com/villim/symbio-blog/tree/master/documents/swagger-apis-doc.png)
 
 
 ## Technique 
@@ -72,7 +79,7 @@ http://localhost:8082/
 
 Then configure as following picture:
 
-![H2DB Login](https://github.com/villim/symbio-blog/documents/H2DB-login.png)
+![H2DB Login](https://github.com/villim/symbio-blog/tree/master/documents/H2DB-login.png)
 
 ```text
 Driver Class: org.h2.Driver
@@ -83,7 +90,7 @@ Password: sa
 
 After logged in, you can see Schemas as:
 
-![H2DB Schemas](https://github.com/villim/symbio-blog/documents/H2DB-schemas.png)
+![H2DB Schemas](https://github.com/villim/symbio-blog/tree/master/documents/H2DB-schemas.png)
 
 
 If TABLES and SEQUENCE not there, you can re-create with **/blog-init/DB-SCRIPTS/db-revision001.sql**
