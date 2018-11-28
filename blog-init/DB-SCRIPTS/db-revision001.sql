@@ -7,4 +7,7 @@ CREATE SEQUENCE SEQ_POST;
 insert into USER values (SEQ_USER.nextval, 'admin', '','admin','ROLE_ADMIN', now());
 insert into USER values (SEQ_USER.nextval, 'anonymous', '','anonymous','ROLE_ANONYMOUS', now());
 
+insert into POST values (SEQ_POST.nextval, '1', 'title1','body1',now());
+insert into POST values (SEQ_POST.nextval, '1', 'title2','body2',now());
+
 commit;

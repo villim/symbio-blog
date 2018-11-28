@@ -8,8 +8,6 @@ import com.symbio.blog.rest.schema.*;
 import com.symbio.blog.rest.service.RequestValidator;
 import com.symbio.blog.rest.service.post.PostService;
 import com.symbio.blog.rest.service.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -35,6 +34,10 @@ public class BlogRestController {
     private PostService postService;
 
 
+    /**
+     * Version API is for check deployed application version
+     * Also a API can be used in monitor services
+     */
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "')")
     @RequestMapping(method = RequestMethod.GET, value = "/version", produces = "application/json")
     public Version version() {
@@ -49,9 +52,11 @@ public class BlogRestController {
      * @return jetty sessionId as xAuthToken
      */
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_USER + "')")
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/login", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/v1/login")
     public LoginResponse login() {
-        return new LoginResponse(RequestContextHolder.getRequestAttributes().getSessionId());
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setxAuthToken(RequestContextHolder.getRequestAttributes().getSessionId());
+        return loginResponse;
     }
 
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "')")
@@ -71,7 +76,12 @@ public class BlogRestController {
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "')")
     @RequestMapping(method = RequestMethod.GET, value = "/v1/users/{id}", produces = "application/json")
     public User getUserById(@PathVariable(value = "id") Long userId) {
-        return this.userService.getById(userId).get();
+        Optional<User> user = this.userService.getById(userId);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            return null;
+        }
     }
 
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "')")
@@ -107,7 +117,7 @@ public class BlogRestController {
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "','" + UserRoleConstant.ROLE_USER + "')")
     @RequestMapping(method = RequestMethod.GET, value = "/v1/posts/{id}", produces = "application/json")
     public Post getPost(@PathVariable(value = "id") Long postId) {
-        return this.postService.getById(postId).get();
+        return this.postService.getById(postId);
     }
 
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "','" + UserRoleConstant.ROLE_USER + "')")
@@ -116,21 +126,16 @@ public class BlogRestController {
         return this.postService.search(userId);
     }
 
-    /**
-     * Only provide search by Id is not enough , We need implement search with filter
-     */
     @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_ANONYMOUS + "','" + UserRoleConstant.ROLE_USER + "')")
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/transactions", produces = "application/json")
-    public List<Post> searchPost(@RequestParam(value = "limit", required = true) String limit,
-                                 @RequestParam(value = "tile", required = false) String tile,
-                                 @RequestParam(value = "body", required = false) String body) {
-
-        return this.postService.search(tile, body);
+    @RequestMapping(method = RequestMethod.GET, value = "/v1/posts", produces = "application/json")
+    public List<Post> searchPost(@RequestParam(value = "limit", required = false) int limit,
+                                 @RequestParam(value = "text", required = false) String text) {
+        return this.postService.search(limit, text);
     }
 
-    @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_COMMENT + "')")
-    @RequestMapping(method = RequestMethod.POST, value = "/v1/{postId}/comments", consumes = "application/json", produces = "application/json")
-    public void publishComment(@Valid @RequestBody CommentRequest request) {
-
-    }
+//    @PreAuthorize("hasAnyRole('" + UserRoleConstant.ROLE_ADMIN + "','" + UserRoleConstant.ROLE_COMMENT + "')")
+//    @RequestMapping(method = RequestMethod.POST, value = "/v1/{postId}/comments", consumes = "application/json", produces = "application/json")
+//    public void publishComment(@Valid @RequestBody CommentRequest request) {
+//        // To be continue
+//    }
 }

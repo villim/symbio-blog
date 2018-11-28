@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false" monitoring="autodetect"
+    dynamicConfig="true">
+
+    <diskStore path="java.io.tmpdir/ehcache" />
+
+    <!-- POST Data will be cached for 5 mins-->
+    <defaultCache maxElementsInMemory="1000000" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="300" diskSpoolBufferSizeMB="30"
+        maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="300" memoryStoreEvictionPolicy="LRU" statistics="true">
+    </defaultCache>
+
+</ehcache>

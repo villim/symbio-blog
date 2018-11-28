@@ -9,3 +9,4 @@ then
     chmod 644 /opt/symbio/config/blog/blog-persistence-sqlite.properties;
 fi
 
+## TODO:

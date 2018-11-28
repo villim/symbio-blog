@@ -32,7 +32,7 @@ public class BlogAuthenticationProvider implements AuthenticationProvider {
         User user = this.userRepository.findByName(username);
 
         try {
-            if (!user.getPassword().equals(password)) {
+            if (user == null || !user.getPassword().equals(password)) {
                 throw new BadCredentialsException(BAD_CREDENTIAL_ERROR);
             }
         } catch (NoSuchElementException e) {

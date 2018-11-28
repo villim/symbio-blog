@@ -4,7 +4,18 @@ public class LoginResponse {
 
     private String xAuthToken;
 
+    public LoginResponse() {
+    }
+
     public LoginResponse(String xAuthToken) {
+        this.xAuthToken = xAuthToken;
+    }
+
+    public String getxAuthToken() {
+        return xAuthToken;
+    }
+
+    public void setxAuthToken(String xAuthToken) {
         this.xAuthToken = xAuthToken;
     }
 

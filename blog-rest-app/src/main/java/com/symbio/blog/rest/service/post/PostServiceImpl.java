@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -18,8 +17,9 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
+
     @Override
-    public Optional<Post> getById(long id) {
+    public Post getById(long id) {
         return this.postRepository.findById(id);
     }
 
@@ -47,11 +47,12 @@ public class PostServiceImpl implements PostService {
         return this.postRepository.save(buildPost(existedPost, postRequest)).getId();
     }
 
+
     @Override
-    public List<Post> search(String title, String body) {
-        //TODO: need support fuzzy search
-        return this.postRepository.findByTitleOrBody(title, body);
+    public List<Post> search(int limit, String text) {
+        return this.postRepository.searchWithTitleOrBody(text);
     }
+
 
     @Override
     public List<Post> search(long userId) {

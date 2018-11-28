@@ -21,7 +21,7 @@ dependencies {
     compile project(":blog-infrastructure")
 
     //compile("org.springframework:spring-core:${springVersion}")
-    //compile("org.springframework:spring-context:${springVersion}")
+    compile("org.springframework:spring-context:${springVersion}")
     compile("org.springframework:spring-context-support:${springVersion}")
     //compile("org.springframework.session:spring-session:${springSessionVersion}")
     compile("org.springframework.security:spring-security-config:${springVersion}")
@@ -34,11 +34,15 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
 
     compile("com.hazelcast:hazelcast-client:${hazelcastVersion}")
+    compile("org.hibernate:hibernate-ehcache:${hibernateCoreVersion}")
+    compile("net.sf.ehcache:ehcache:2.10.4")
+
     compile("org.apache.commons:commons-dbcp2:${commonDBCP2Version}")
     compile("com.google.code.gson:gson:${gsonVersion}")
     compile("org.apache.logging.log4j:log4j-web:2.1")
     compile('org.aspectj:aspectjweaver:1.8.13')
     compile('org.aspectj:aspectjrt:1.9.1')
+
     compile("com.h2database:h2:1.4.194")
 
     compile("io.springfox:springfox-swagger2:2.0.2")
