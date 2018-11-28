@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -64,6 +65,7 @@ public class BlogRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         StringBuilder builder = new StringBuilder();
@@ -74,5 +76,13 @@ public class BlogRestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorMessage error = new ErrorMessage(VALIDATION_ERROR, builder.substring(0, builder.length() - 2));
         return new ResponseEntity<Object>(error, new HttpHeaders(), HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
+
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ErrorMessage errorDetails = new ErrorMessage(VALIDATION_ERROR, ex.getBindingResult().toString());
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
 
 }

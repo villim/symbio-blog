@@ -1,11 +1,11 @@
 package com.symbio.blog.domain.user;
 
 import com.symbio.blog.domain.exception.BlogValidationException;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 @DynamicUpdate
 @Entity
@@ -34,6 +34,7 @@ public class User {
     @Column(name = "MODIFIED_DATE", insertable = false)
     private Date modifiedDate;
 
+
     public Long getId() {
         return id;
     }
@@ -55,9 +56,8 @@ public class User {
     }
 
     public void setEmail(String email) {
-        if (StringUtils.isNotBlank(email) && email.contains("@")) {
-            //TODO: need replace with regular expression validation
-            throw new BlogValidationException("Incorrect Email Adderss");
+        if (!isEmailFormat(email)) {
+            throw new BlogValidationException("Incorrect Email Address");
         }
         this.email = email;
     }
@@ -84,5 +84,15 @@ public class User {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    private boolean isEmailFormat(String emailAddress) {
+        String regression = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regression);
+        if (pattern.matcher(emailAddress).find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
