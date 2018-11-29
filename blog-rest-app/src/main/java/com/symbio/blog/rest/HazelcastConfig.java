@@ -21,12 +21,12 @@ import org.springframework.util.SocketUtils;
 
 @EnableHazelcastHttpSession(maxInactiveIntervalInSeconds = 300) // 5 mins
 @Configuration
-public class HazelcastHttpSessionConfig {
+public class HazelcastConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HazelcastHttpSessionConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HazelcastConfig.class);
 
 
-    @Bean(destroyMethod = "shutdown")
+    @Bean(name = "blogHazelcastInstance", destroyMethod = "shutdown")
     public HazelcastInstance hazelcastInstance() {
         Config config = new Config();
 

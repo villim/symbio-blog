@@ -11,27 +11,29 @@ import org.springframework.core.io.Resource;
 import javax.management.MBeanServer;
 import java.lang.management.ManagementFactory;
 
+// TODO: H2 JDBC no supporting  @Cacheable on method, encounter AbstractMethodError
+
 //@Configuration("eh-cache-context")
 //@EnableCaching
 public class EHCacheContext {
 
-    @Bean
-    public CacheManager cacheManager() {
-        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
-        cacheManager.setCacheManager(ehcache().getObject());
-        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        ManagementService.registerMBeans(cacheManager.getCacheManager(), mBeanServer, true, true, true, true);
-        return cacheManager;
-    }
+//    @Bean
+//    public CacheManager cacheManager() {
+//        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+//        cacheManager.setCacheManager(ehcache().getObject());
+//        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+//        ManagementService.registerMBeans(cacheManager.getCacheManager(), mBeanServer, true, true, true, true);
+//        return cacheManager;
+//    }
 
-    @Bean
-    public EhCacheManagerFactoryBean ehcache() {
-        EhCacheManagerFactoryBean ehcache = new EhCacheManagerFactoryBean();
-        Resource ehCacheConf = new ClassPathResource("blog-ehcache-conf.xml");
-        ehcache.setShared(true);
-        ehcache.setConfigLocation(ehCacheConf);
-        return ehcache;
-    }
+//    @Bean
+//    public EhCacheManagerFactoryBean ehcache() {
+//        EhCacheManagerFactoryBean ehcache = new EhCacheManagerFactoryBean();
+//        Resource ehCacheConf = new ClassPathResource("blog-ehcache-conf.xml");
+//        ehcache.setShared(true);
+//        ehcache.setConfigLocation(ehCacheConf);
+//        return ehcache;
+//    }
 
 
 }

@@ -21,5 +21,6 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     //    @Cacheable(key = "#root.method.name+'-'+#p0+'-'+#p1")
     @Query(value = "select * from post where title like '%:text%' or body like '%:text%'", nativeQuery = true)
+    //TODO: nativeQuery not working with H2DB
     List<Post> searchWithTitleOrBody(@Param("text") String text);
 }

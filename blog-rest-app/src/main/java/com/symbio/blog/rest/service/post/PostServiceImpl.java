@@ -5,6 +5,7 @@ import com.symbio.blog.domain.exception.BlogValidationException;
 import com.symbio.blog.domain.post.Post;
 import com.symbio.blog.infrastructure.springdata.PostRepository;
 import com.symbio.blog.rest.schema.PostRequest;
+import com.symbio.blog.rest.service.cache.CacheManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,21 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private CacheManagerService cacheManagerService;
+
 
     @Override
     public Post getById(long id) {
-        return this.postRepository.findById(id);
+        String key = "PostService-getById-id-" + id;
+        Object obj = this.cacheManagerService.getFromCache(key);
+        if (obj != null) {
+            return (Post) obj;
+        } else {
+            Post post = this.postRepository.findById(id);
+            this.cacheManagerService.putIntoCache(key, post);
+            return post;
+        }
     }
 
     @Override
@@ -50,13 +62,29 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> search(int limit, String text) {
-        return this.postRepository.searchWithTitleOrBody(text);
+        String key = "PostService-search-limit-" + limit + "-userId-" + text;
+        Object obj = this.cacheManagerService.getFromCache(key);
+        if (obj != null) {
+            return (List<Post>) obj;
+        } else {
+            List<Post> posts = this.postRepository.searchWithTitleOrBody(text);
+            this.cacheManagerService.putIntoCache(key, posts);
+            return posts;
+        }
     }
 
 
     @Override
     public List<Post> search(long userId) {
-        return this.postRepository.findByUserId(userId);
+        String key = "PostService-search-userId" + userId;
+        Object obj = this.cacheManagerService.getFromCache(key);
+        if (obj != null) {
+            return (List<Post>) obj;
+        } else {
+            List<Post> posts = this.postRepository.findByUserId(userId);
+            this.cacheManagerService.putIntoCache(key, posts);
+            return posts;
+        }
     }
 
     private Post checkExistedPost(String title) {
