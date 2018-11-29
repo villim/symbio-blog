@@ -14,7 +14,7 @@ Please check with Swagger api documents after app running
 
 * DDD design
 * Spring Boot
-* H2 ( Spring5 do not support SQLite well, change to H2 to save time ) 
+* H2 ( Spring5 do not support SQLite well, change to H2 for saving time ) 
 * Gradle
 * Hazelcast
 * Swagger
@@ -49,7 +49,7 @@ $ copy /blog-init/DB-SCRIPTS/*.db /opt/symbio/config/blog
 ```
 
 
-### 3. Check H2 Database Schema
+### 3. Check H2 Database Schema (Optional)
 
 Not necessary, but if you want to check Database schema, you may follow next steps.
 
@@ -94,9 +94,16 @@ After logged in, you can see Schemas as:
 
 If TABLES and SEQUENCE not there, you can re-create with 
 
-```**/blog-init/DB-SCRIPTS/db-revision001.sql**```
+```
+/blog-init/DB-SCRIPTS/db-revision001.sql
+```
 
-Make sure you exit this H2 instance before run blog-rest-app
+Make sure you exit this H2 instance before run blog-rest-app!!
+
+```bash
+ctrl + c
+```
+
 
 ### 4. Run App
 
