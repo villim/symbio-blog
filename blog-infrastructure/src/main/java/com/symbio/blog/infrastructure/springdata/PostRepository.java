@@ -16,11 +16,11 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     //@Cacheable(key = "#root.method.name+'-'+#p0")
     Post findById(long id);
 
-    //    @Cacheable(key = "#root.method.name+'-'+#p0")
+    //@Cacheable(key = "#root.method.name+'-'+#p0")
     List<Post> findByUserId(long userId);
 
-    //    @Cacheable(key = "#root.method.name+'-'+#p0+'-'+#p1")
+    //@Cacheable(key = "#root.method.name+'-'+#p0+'-'+#p1")
     @Query(value = "select * from post where title like '%:text%' or body like '%:text%'", nativeQuery = true)
-    //TODO: nativeQuery not working with H2DB
+    //TODO: nativeQuery not working with H2DB, need more time researching
     List<Post> searchWithTitleOrBody(@Param("text") String text);
 }
